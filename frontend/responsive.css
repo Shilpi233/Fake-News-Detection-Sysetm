@@ -1,0 +1,144 @@
+/* =========================
+   Base Reset + Responsive Helpers
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
+
+/* Typography scaling with clamp */
+h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+}
+h2 {
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+}
+p, a, li, button {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  line-height: 1.6;
+}
+
+/* =========================
+   Layout Containers
+========================= */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 clamp(16px, 4vw, 32px);
+  margin: 0 auto;
+}
+
+/* =========================
+   Hero Section
+========================= */
+.hero {
+  padding: clamp(20px, 6vw, 40px);
+  text-align: center;
+}
+.hero-content {
+  max-width: 700px;
+  margin: auto;
+}
+
+/* =========================
+   About Section
+========================= */
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: clamp(20px, 5vw, 40px);
+  align-items: center;
+}
+.about-text {
+  flex: 1;
+  min-width: 260px;
+}
+.about-image {
+  flex: 1;
+  min-width: 240px;
+}
+
+/* =========================
+   Contact Section
+========================= */
+.contact {
+  padding: clamp(20px, 5vw, 40px);
+}
+.contact-box {
+  background: #fff;
+  border-radius: 10px;
+  padding: clamp(16px, 4vw, 24px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   Navbar
+========================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px clamp(16px, 4vw, 32px);
+}
+.navbar ul {
+  display: flex;
+  list-style: none;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+.navbar a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* =========================
+   Media Queries
+========================= */
+
+/* Tablets and below */
+@media (max-width: 1024px) {
+  .about {
+    flex-direction: column;
+    text-align: center;
+  }
+  .navbar ul {
+    gap: 12px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .navbar ul {
+    display: none; /* Replace with JS toggle for hamburger */
+  }
+  .hero {
+    padding: 20px;
+  }
+  .about {
+    padding: 20px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .hero, .about, .contact {
+    padding: 16px;
+  }
+  .contact-box {
+    padding: 16px;
+  }
+}

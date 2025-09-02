@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruthLens Pro - Dashboard</title>
+    <script src="auth.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: #4facfe;
+        }
+        
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-label {
+            opacity: 0.8;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .content-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Recent Activity */
+        .activity-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid #6366f1;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .activity-title {
+            font-weight: 500;
+        }
+        
+        .activity-time {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+        
+        .activity-text {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .score-badge {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .score-high { background: rgba(16, 185, 129, 0.3); color: #10b981; }
+        .score-medium { background: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .score-low { background: rgba(239, 68, 68, 0.3); color: #ef4444; }
+        
+        /* Delete Button */
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            border-radius: 6px;
+            padding: 0.3rem 0.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.4);
+            transform: scale(1.1);
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .action-btn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+        
+        .action-btn.secondary {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Recent History Table */
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .history-table th {
+            background: rgba(255,255,255,0.1);
+            padding: 0.8rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .history-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .history-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                display: flex;
+                gap: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .history-table {
+                font-size: 0.85rem;
+            }
+        }
+        
+        /* Dark Mode Support */
+        body.dark-mode {
+            background: #1a1a2e;
+        }
+        
+        body.dark-mode .content-card,
+        body.dark-mode .stat-card {
+            background: rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+    <script>
+    // Redirect to login if not logged in
+    if (!isUserLoggedIn()) {
+        window.location.href = 'login.html';
+    }
+    </script>
+    <nav class="navbar">
+        <div class="logo">🔍 TruthLens</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="user_dashboard.html" class="user_dashboard-nav-btn active">Dashboard</a>
+            <a href="about.html">About</a>
+            <button id="themeBtn" style="background:none; border:1px solid rgba(255,255,255,0.3); color:white; padding:0.5rem; border-radius:6px; cursor:pointer;">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Your Dashboard</h1>
+            <p>Track your truth detection activity</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-icon">📊</span>
+                <div class="stat-number" id="totalChecks">128</div>
+                <div class="stat-label">Total Checks</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">✅</span>
+                <div class="stat-number" id="truthfulCount">98</div>
+                <div class="stat-label">Truthful News</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">⚠️</span>
+                <div class="stat-number" id="suspiciousCount">30</div>
+                <div class="stat-label">Suspicious</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🎯</span>
+                <div class="stat-number" id="accuracyScore">94%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Recent Activity -->
+            <div class="content-card">
+                <div class="card-title">
+                    <i class="fas fa-clock"></i>
+                    Recent Activity
+                </div>
+                
+                <div id="activityList">
+                    <div class="activity-item">
+                        <div class="activity-header">
+                            <div class="activity-title">Health News Check</div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div class="activity-time">2 hours ago</div>
+                                <button class="delete-btn" onclick="deleteActivity(this)" title="Delete this analysis">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="activity-text">COVID vaccine effectiveness news...</div>
+                        <span class="score-badge score-high">Truth: 89%</span>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-header">
+                            <div class="activity-title">Political News</div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div class="activity-time">5 hours ago</div>
+                                <button class="delete-btn" onclick="deleteActivity(this)" title="Delete this analysis">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="activity-text">Election rally attendance claims...</div>
+                        <span class="score-badge score-medium">Truth: 64%</span>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-header">
+                            <div class="activity-title">Social Media Post</div>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div class="activity-time">1 day ago</div>
+                                <button class="delete-btn" onclick="deleteActivity(this)" title="Delete this analysis">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="activity-text">Miracle cure advertisement...</div>
+                        <span class="score-badge score-low">Truth: 18%</span>
+                    </div>
+                </div>
+                
+                <button class="action-btn secondary" onclick="showAllHistory()" style="margin-top: 1rem;">
+                    View All History
+                </button>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="content-card">
+                <div class="card-title">
+                    <i class="fas fa-bolt"></i>
+                    Quick Actions
+                </div>
+                
+                <div class="quick-actions">
+                    <a href="fake_news_detector.html" class="action-btn">
+                        <i class="fas fa-plus"></i>
+                        New Analysis
+                    </a>
+                    
+                    <button class="action-btn secondary" onclick="exportData()">
+                        <i class="fas fa-download"></i>
+                        Download History
+                    </button>
+                </div>
+                
+                <!-- User Info -->
+                <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.2);">
+                    <h4>Account Info</h4>
+                    <p style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">
+                        Member since: Aug 2025<br>
+                        Last active: Today
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Table (Hidden by default) -->
+        <div class="content-card" id="historySection" style="margin-top: 2rem; display: none;">
+            <div class="card-title">
+                <i class="fas fa-history"></i>
+                Complete History
+                <button onclick="hideHistory()" style="background:none; border:none; color:white; margin-left:auto; cursor:pointer;">✕</button>
+            </div>
+            
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Content</th>
+                        <th>Score</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody">
+                    <tr>
+                        <td>Aug 31</td>
+                        <td>Health News Check</td>
+                        <td><span class="score-badge score-high">89%</span></td>
+                        <td>Health</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Aug 31</td>
+                        <td>Political News</td>
+                        <td><span class="score-badge score-medium">64%</span></td>
+                        <td>Politics</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Aug 30</td>
+                        <td>Social Media Post</td>
+                        <td><span class="score-badge score-low">18%</span></td>
+                        <td>Social</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Aug 30</td>
+                        <td>Economic Report</td>
+                        <td><span class="score-badge score-high">92%</span></td>
+                        <td>Economics</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Aug 29</td>
+                        <td>Tech News Update</td>
+                        <td><span class="score-badge score-high">87%</span></td>
+                        <td>Technology</td>
+                        <td>
+                            <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        document.getElementById('themeBtn').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            this.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+
+        // Show/Hide History
+        function showAllHistory() {
+            document.getElementById('historySection').style.display = 'block';
+            document.getElementById('historySection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideHistory() {
+            document.getElementById('historySection').style.display = 'none';
+        }
+
+        // Export Data
+        function exportData() {
+            const data = [
+                ['Date', 'Content', 'Score', 'Type'],
+                ['Aug 31', 'Health News Check', '89%', 'Health'],
+                ['Aug 31', 'Political News', '64%', 'Politics'],
+                ['Aug 30', 'Social Media Post', '18%', 'Social'],
+                ['Aug 30', 'Economic Report', '92%', 'Economics'],
+                ['Aug 29', 'Tech News Update', '87%', 'Technology']
+            ];
+            
+            const csvContent = data.map(row => row.join(',')).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'truthlens_history.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showMessage('History exported successfully!');
+        }
+
+        // Clear History
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all history?')) {
+                document.getElementById('activityList').innerHTML = '<p style="text-align:center; opacity:0.7; padding:2rem;">No recent activity</p>';
+                document.getElementById('historyTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center; opacity:0.7; padding:2rem;">No history available</td></tr>';
+                
+                // Reset stats
+                document.getElementById('totalChecks').textContent = '0';
+                document.getElementById('truthfulCount').textContent = '0';
+                document.getElementById('suspiciousCount').textContent = '0';
+                document.getElementById('accuracyScore').textContent = '0%';
+                
+                showMessage('History cleared successfully!');
+            }
+        }
+
+        // Delete Individual Activity
+        function deleteActivity(button) {
+            if (confirm('Delete this analysis?')) {
+                const activityItem = button.closest('.activity-item');
+                
+                // Get activity data for removal from storage
+                const title = activityItem.querySelector('.activity-title').textContent;
+                const timestamp = activityItem.querySelector('.activity-time').textContent;
+                
+                // Remove from localStorage (you'll need to implement this based on your storage structure)
+                removeFromStorage(title, timestamp);
+                
+                // Animate and remove from DOM
+                activityItem.style.animation = 'slideOut 0.3s ease-in';
+                
+                setTimeout(() => {
+                    activityItem.remove();
+                    updateStats(-1);
+                    showMessage('Analysis deleted');
+                }, 300);
+            }
+        }
+        
+        // Delete Table Row
+        function deleteTableRow(button) {
+            if (confirm('Delete this analysis?')) {
+                const row = button.closest('tr');
+                
+                // Get row data for removal from storage
+                const rowData = {
+                    date: row.cells[0].textContent,
+                    content: row.cells[1].textContent,
+                    score: row.cells[2].textContent,
+                    type: row.cells[3].textContent
+                };
+                
+                // Remove from localStorage
+                removeFromStorage(rowData.content, rowData.date);
+                
+                // Animate and remove from DOM
+                row.style.animation = 'slideOut 0.3s ease-in';
+                
+                setTimeout(() => {
+                    row.remove();
+                    updateStats(-1);
+                    showMessage('Analysis deleted');
+                }, 300);
+            }
+        }
+        
+        // Remove from Storage (Connect this to your data storage)
+        function removeFromStorage(identifier, timestamp) {
+            // Example implementation - modify based on your storage structure
+            let history = JSON.parse(localStorage.getItem('analysisHistory') || '[]');
+            
+            // Filter out the item to delete
+            history = history.filter(item => {
+                return !(item.title === identifier || item.content === identifier);
+            });
+            
+            // Save back to localStorage
+            localStorage.setItem('analysisHistory', JSON.stringify(history));
+        }
+        
+        // Load Real Data (Connect this to your actual data)
+        function loadUserData() {
+            // Get data from localStorage or your backend
+            const history = JSON.parse(localStorage.getItem('analysisHistory') || '[]');
+            
+            // Update stats based on real data
+            document.getElementById('totalChecks').textContent = history.length;
+            
+            // Count truthful vs suspicious
+            const truthful = history.filter(item => item.score > 70).length;
+            const suspicious = history.filter(item => item.score < 50).length;
+            
+            document.getElementById('truthfulCount').textContent = truthful;
+            document.getElementById('suspiciousCount').textContent = suspicious;
+            
+            // Calculate accuracy
+            const accuracy = history.length > 0 ? Math.round((truthful / history.length) * 100) : 0;
+            document.getElementById('accuracyScore').textContent = accuracy + '%';
+            
+            // Load recent activity
+            loadRecentActivity(history);
+        }
+        
+        function loadRecentActivity(history) {
+            const activityList = document.getElementById('activityList');
+            const recentItems = history.slice(0, 3); // Last 3 items
+            
+            if (recentItems.length === 0) {
+                activityList.innerHTML = '<p style="text-align:center; opacity:0.7; padding:2rem;">No recent activity</p>';
+                return;
+            }
+            
+            activityList.innerHTML = '';
+            
+            recentItems.forEach(item => {
+                const scoreClass = item.score > 70 ? 'score-high' : item.score > 50 ? 'score-medium' : 'score-low';
+                
+                const activityElement = document.createElement('div');
+                activityElement.className = 'activity-item';
+                activityElement.innerHTML = `
+                    <div class="activity-header">
+                        <div class="activity-title">${item.title}</div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div class="activity-time">${item.time}</div>
+                            <button class="delete-btn" onclick="deleteActivity(this)" title="Delete this analysis">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="activity-text">${item.content}</div>
+                    <span class="score-badge ${scoreClass}">Truth: ${item.score}%</span>
+                `;
+                
+                activityList.appendChild(activityElement);
+            });
+        }
+        
+        // Update Stats
+        function updateStats(change) {
+            const totalElement = document.getElementById('totalChecks');
+            const currentTotal = parseInt(totalElement.textContent);
+            totalElement.textContent = Math.max(0, currentTotal + change);
+        }
+
+        // Show Message
+        function showMessage(text) {
+            const msg = document.createElement('div');
+            msg.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(16, 185, 129, 0.9);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                font-weight: 500;
+                z-index: 1000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            msg.textContent = text;
+            document.body.appendChild(msg);
+            
+            setTimeout(() => {
+                msg.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => msg.remove(), 300);
+            }, 3000);
+        }
+
+        // Add animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Add new activity (for demo)
+        function addNewActivity(title, content, score) {
+            const activityList = document.getElementById('activityList');
+            const newItem = document.createElement('div');
+            newItem.className = 'activity-item';
+            
+            const scoreClass = score > 70 ? 'score-high' : score > 50 ? 'score-medium' : 'score-low';
+            
+            newItem.innerHTML = `
+                <div class="activity-header">
+                    <div class="activity-title">${title}</div>
+                    <div class="activity-time">Just now</div>
+                </div>
+                <div class="activity-text">${content}</div>
+                <span class="score-badge ${scoreClass}">Truth: ${score}%</span>
+            `;
+            
+            activityList.insertBefore(newItem, activityList.firstChild);
+            
+            // Remove last item if more than 3
+            if (activityList.children.length > 3) {
+                activityList.removeChild(activityList.lastChild);
+            }
+            
+            // Update total count
+            const totalElement = document.getElementById('totalChecks');
+            totalElement.textContent = parseInt(totalElement.textContent) + 1;
+        }
+
+        // Simulate new analysis (for demo)
+        function simulateNewAnalysis() {
+            const titles = ['Breaking News', 'Social Post', 'News Article', 'Image Claim'];
+            const contents = ['Latest update on...', 'Viral claim about...', 'Report states that...', 'Photo shows...'];
+            
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    const randomTitle = titles[Math.floor(Math.random() * titles.length)];
+                    const randomContent = contents[Math.floor(Math.random() * contents.length)];
+                    const randomScore = Math.floor(Math.random() * 80) + 20;
+                    
+                    addNewActivity(randomTitle, randomContent, randomScore);
+                }
+            }, 15000); // Every 15 seconds
+        }
+
+        // Initialize
+        window.addEventListener('load', function() {
+            // Load real user data instead of demo data
+            loadUserData();
+            
+            // Start auto-refresh for new analyses
+            simulateNewAnalysis();
+        });
+    </script>
+</body>
+</html>

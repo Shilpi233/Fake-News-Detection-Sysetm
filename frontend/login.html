@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TruthLens</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        nav {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            padding: 18px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0 0 18px 18px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 24px #764ba220;
+        }
+         .nav-left {
+            display: flex;
+            align-items: center;
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: #fff;
+            margin-left: 32px;
+            text-shadow: 0 2px 12px #4facfe99, 0 1px 0 #333;
+            letter-spacing: 2px;
+            user-select: none;
+        }
+        .nav-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-right: 32px;
+        }
+        .nav-right a {
+            color: #fff;
+            text-shadow: 0 2px 8px #4facfe55, 0 1px 0 #333;
+            text-decoration: none;
+            font-weight: 700;
+            margin: 0 8px;
+            font-size: 1.1rem;
+            padding: 8px 18px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s, text-shadow 0.2s;
+        }
+        .nav-right a:hover, .nav-right a.active {
+            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+            color: #fff;
+            text-shadow: 0 4px 16px #00f2fe99, 0 1px 0 #333;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50px) translateY(-50px) rotate(0deg); }
+            50% { transform: translateX(50px) translateY(50px) rotate(180deg); }
+        }
+        .login-hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+            gap: 48px;
+            padding: 0;
+        }
+        .login-illustration {
+            max-width: 480px;
+            width: 38vw;
+            min-width: 260px;
+            object-fit: contain;
+            margin-top: 24px;
+        }
+        .login-form-box {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 24px #764ba220;
+            padding: 40px 36px 32px 36px;
+            min-width: 320px;
+            max-width: 420px;
+            flex: 1 1 340px;
+        }
+        .login-form-box h1 {
+            color: #22223b;
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .login-form label {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #22223b;
+            font-size: 1.08rem;
+        }
+        .login-form label i {
+            margin-right: 8px;
+            color: #4facfe;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1.5px solid #e1e5e9;
+            font-size: 1.08rem;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px #4facfe11;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .login-form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        .login-form .remember {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.98rem;
+        }
+        .login-form .forgot {
+            font-size: 0.98rem;
+        }
+        .login-form button {
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 32px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #2563eb22;
+            transition: box-shadow 0.2s, background 0.2s;
+            margin-top: 8px;
+        }
+        .login-form button:hover {
+            background: #1741a6;
+        }
+        .login-form-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            font-size: 0.98rem;
+        }
+        .login-form-links a {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+        .login-form-links .register-link {
+            color: #e63946;
+            font-weight: 600;
+        }
+        @media (max-width: 900px) {
+            .login-hero { flex-direction: column; gap: 24px; align-items: center; }
+            .login-illustration { margin: 0 auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <nav>
+        <div class="nav-left">TruthLens</div>
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="features.html">Features</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html" class="login-nav-btn active" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </div>
+    </nav>
+    <div class="login-hero">
+        
+            <div class="login-hero" style="align-items: center; justify-content: center; min-height: 80vh;">
+                <div class="login-form-card" style="display: flex; flex-direction: row; align-items: center; background: #fff; border-radius: 24px; box-shadow: 0 8px 32px #764ba220; padding: 0; max-width: 1280px; width: 100%; min-width: 340px; overflow: hidden;">
+                    <div class="login-image-box" style="flex: 1 1 440px; display: flex; align-items: center; justify-content: center; background: none; height: 100%; min-width: 340px;">
+                        <img src="login.jpg" alt="Login Illustration" style="max-width: 600px; width: 44vw; min-width: 340px; height: auto; border-radius: 24px 0 0 24px; background: none; box-shadow: none; object-fit: contain; display: block; margin: 48px 0;" loading="lazy" />
+                    </div>
+                    <div class="login-form-box" style="flex: 1 1 440px; max-width: 540px; min-width: 340px; padding: 64px 56px 64px 56px; margin: 0; background: none; box-shadow: none; border-radius: 0;">
+                        <h1>Login</h1>
+                        <form class="login-form" id="loginForm" autocomplete="off">
+                            <label for="username"><i class="fas fa-user"></i> Username</label>
+                            <input type="text" id="username" name="username" required>
+                            <label for="password"><i class="fas fa-lock"></i> Password</label>
+                            <input type="password" id="password" name="password" required>
+                            <div class="login-form-row">
+                                <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
+                                <a href="#" class="forgot">Forgot password?</a>
+                            </div>
+                            <button type="submit">Login</button>
+                            <div class="login-form-links">
+                                <span>Don't have an account? <a href="register.html" class="register-link">Register here</a></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </script>
+</body>
+<script>
+// Redirect to fake_news_detector.html after login
+document.addEventListener('DOMContentLoaded', function() {
+    var loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            // You can add real validation here if needed
+            window.location.href = 'fake_news_detector.html';
+        });
+    }
+});
+</script>
+</html>

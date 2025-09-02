@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="responsive.css">
+    <title>Contact - TruthLens</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+   
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50px) translateY(-50px) rotate(0deg); }
+            50% { transform: translateX(50px) translateY(50px) rotate(180deg); }
+        }
+        .contact-hero { display: flex; align-items: center; justify-content: flex-start; min-height: 80vh; }
+        .contact-content {
+            background: rgba(255,255,255,0.92);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px #764ba220, 0 2px 16px #4facfe33;
+            border: 2px solid #4facfe33;
+            padding: 48px 48px 48px 56px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .contact-icon {
+            font-size: 3.5rem;
+            color: #4facfe;
+            margin-right: 32px;
+        }
+        nav {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            padding: 18px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 0 0 18px 18px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 24px #764ba220;
+            
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            font-size: 2.6rem;
+            font-weight: 900;
+            color: #fff;
+            margin-left: 32px;
+            text-shadow: 0 2px 12px #4facfe99, 0 1px 0 #333;
+            letter-spacing: 2px;
+            user-select: none;
+        }
+        .nav-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-right: 32px;
+        }
+        .nav-right a {
+            color: #fff;
+            text-shadow: 0 2px 8px #4facfe55, 0 1px 0 #333;
+            text-decoration: none;
+            font-weight: 700;
+            margin: 0 8px;
+            font-size: 1.1rem;
+            padding: 8px 18px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s, text-shadow 0.2s;
+        }
+        .nav-right a:hover, .nav-right a.active {
+            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+            color: #fff;
+            text-shadow: 0 4px 16px #00f2fe99, 0 1px 0 #333;
+        }
+        /* Remove nav-left and nav-right custom styles here so style.css is used */
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation"></div>
+
+    <nav>
+        <div class="nav-left">
+            TruthLens
+        </div>
+        <div class="nav-right">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="features.html">Features</a>
+            <a href="contact.html" class="active">Contact</a>
+             <a href="login.html" class="login-nav-btn active" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-in-alt"></i> Login</a>
+        </div>
+    </nav>
+
+    <div style="max-width: 900px; margin: 0 auto 24px auto; padding: 0 16px;">
+        <h1 style="color: #fff; font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; text-align:center;">Contact TruthLens</h1>
+        <div style="color:black; font-size: 1.15rem; text-align:center; margin-bottom: 18px;">
+            If you have any questions, feedback, or need help regarding fake news detection, please don't hesitate to contact us. Our team is available 24/7 to support you in making information trustworthy and reliable.
+        </div>
+    </div>
+    <div class="contact-hero" style="align-items: flex-start; justify-content: center; min-height: 80vh;">
+        <div class="contact-form-card" style="display: flex; flex-direction: row; align-items: stretch; background: #fff; border-radius: 16px; box-shadow: 0 2px 16px #19e68c22; padding: 0; max-width: 1100px; width: 100%; min-width: 340px; overflow: hidden; margin: 0 auto; border: 2px solid #19e68c33;">
+            <div class="contact-info-box" style="flex: 1 1 380px; max-width: 480px; min-width: 320px; padding: 40px 32px 32px 32px; background: #fafbfc; display: flex; flex-direction: column; justify-content: flex-start; gap: 32px;">
+                <div style="display: flex; align-items: flex-start; gap: 18px; margin-bottom: 18px;">
+                    <i class="fas fa-map-marker-alt" style="color:#19e68c; font-size:2rem; margin-top:2px;"></i>
+                    <div>
+                        <div style="font-size: 1.18rem; font-weight: 700; color: #22223b; margin-bottom: 2px;">Location:</div>
+                        <div style="color: #4a4e69; font-size: 1.08rem;">Lucknow, Uttar pradesh, faizabad road</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 18px; margin-bottom: 18px;">
+                    <i class="fas fa-envelope" style="color:#19e68c; font-size:2rem; margin-top:2px;"></i>
+                    <div>
+                        <div style="font-size: 1.18rem; font-weight: 700; color: #22223b; margin-bottom: 2px;">Email:</div>
+                        <div style="color: #4a4e69; font-size: 1.08rem;">support@fakenewsdetection.com</div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 18px; margin-bottom: 18px;">
+                    <i class="fas fa-phone-alt" style="color:#19e68c; font-size:2rem; margin-top:2px;"></i>
+                    <div>
+                        <div style="font-size: 1.18rem; font-weight: 700; color: #22223b; margin-bottom: 2px;">Call:</div>
+                        <div style="color: #4a4e69; font-size: 1.08rem;">9485276482</div>
+                    </div>
+                </div>
+                <div style="width:100%; height:180px; border-radius:14px; overflow:hidden; box-shadow:0 2px 12px #19e68c22; margin-top: 10px;">
+                    <iframe src="https://www.google.com/maps?q=Lucknow,+Uttar+Pradesh,+faizabad+road&output=embed" style="border:0; width:100%; height:100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            <div class="contact-form-box" style="flex: 1 1 520px; display: flex; flex-direction: column; justify-content: flex-start; align-items: stretch; background: none; min-width: 340px; max-width: 700px; padding: 40px 32px 32px 32px;">
+                <div style="font-size: 2rem; font-weight: 800; color: #22223b; margin-bottom: 32px; text-align:left;">Send Message</div>
+                <form id="contactForm" style="display: flex; flex-direction: column; gap: 18px; width: 100%;">
+                    <div style="display: flex; gap: 18px;">
+                        <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+                            <label style="font-weight:600; color:#22223b; margin-bottom:2px;">Your Name</label>
+                            <input type="text" placeholder="Your Name" required style="padding: 10px; border-radius: 8px; border: 1.5px solid #e1e5e9; font-size: 1.08rem; box-shadow: 0 2px 8px #19e68c11; outline: none; transition: border 0.2s;">
+                        </div>
+                        <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+                            <label style="font-weight:600; color:#22223b; margin-bottom:2px;">Your Email</label>
+                            <input type="email" placeholder="Your Email" required style="padding: 10px; border-radius: 8px; border: 1.5px solid #e1e5e9; font-size: 1.08rem; box-shadow: 0 2px 8px #19e68c11; outline: none; transition: border 0.2s;">
+                        </div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <label style="font-weight:600; color:#22223b; margin-bottom:2px;">Subject</label>
+                        <input type="text" placeholder="Subject" required style="padding: 10px; border-radius: 8px; border: 1.5px solid #e1e5e9; font-size: 1.08rem; box-shadow: 0 2px 8px #19e68c11; outline: none; transition: border 0.2s;">
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:6px;">
+                        <label style="font-weight:600; color:#22223b; margin-bottom:2px;">Message</label>
+                        <textarea placeholder="Message" required rows="5" style="padding: 10px; border-radius: 8px; border: 1.5px solid #e1e5e9; font-size: 1.08rem; box-shadow: 0 2px 8px #19e68c11; outline: none; resize: vertical; transition: border 0.2s;"></textarea>
+                    </div>
+                    <button type="submit" style="background: #19e68c; color: #fff; border: none; border-radius: 8px; padding: 14px 0; font-size: 1.15rem; font-weight: 700; cursor: pointer; box-shadow: 0 2px 12px #19e68c40; transition: box-shadow 0.2s, background 0.2s; width: 180px; margin: 0 auto; display: block;">Send Message</button>
+                </form>
+                <div id="contactMsg" style="text-align:left; margin-top: 12px;"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+    document.getElementById('contactForm').onsubmit = function(e) {
+        e.preventDefault();
+        document.getElementById('contactMsg').textContent = 'Thank you for contacting us!';
+        this.reset();
+    };
+    </script>
