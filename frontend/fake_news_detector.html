@@ -613,7 +613,8 @@
             <a href="features.html">Features</a>
             <a href="contact.html">Contact</a>
             <a href="user_dashboard.html">Dashboard</a>
-            <a href="login.html" class="login-nav-btn" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <!-- <a href="login.html" class="login-nav-btn" id="loginNavBtn" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-in-alt"></i> Login</a> -->
+            <a href="#" class="logout-nav-btn" id="logoutNavBtn" style="margin-left: 12px; border: 1.5px solid #ef4444; background: #fff; color: #ef4444; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #ef444422; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </div>
     </nav>
 
@@ -771,6 +772,25 @@
        
 
     <script>
+        // --- Auth Navbar Logic ---
+        function updateNavbarAuth() {
+            // Ab sirf logout button dikhana hai
+            var logoutBtn = document.getElementById('logoutNavBtn');
+            if (logoutBtn) logoutBtn.style.display = 'flex';
+        }
+        updateNavbarAuth();
+        // Logout click handler
+        var logoutBtn = document.getElementById('logoutNavBtn');
+        if (logoutBtn) {
+            logoutBtn.onclick = function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                updateNavbarAuth();
+                window.location.href = 'index.html';
+            };
+        }
+        // Optionally, update on storage change (multi-tab)
+        window.addEventListener('storage', updateNavbarAuth);
         // --- Dark/Light Mode ---
         const themeToggle = document.getElementById('themeToggle');
         themeToggle.addEventListener('click', () => {

@@ -3,7 +3,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TruthLens Pro - Dashboard</title>
-    <script src="auth.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -21,33 +20,94 @@
             color: white;
         }
         
-        /* Navigation */
-        .navbar {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
+        
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateX(-50px) translateY(-50px) rotate(0deg); }
+            50% { transform: translateX(50px) translateY(50px) rotate(180deg); }
+        }
+        .about-hero { display: flex; align-items: center; justify-content: flex-start; min-height: 80vh; }
+        .about-illustration { max-width: 540px; width: 38vw; min-width: 320px; margin-left: 2vw; margin-right: 2vw; border-radius: 24px; background: #fff; box-shadow: 0 8px 32px #764ba220; }
+        .about-content {
+            background: rgba(255,255,255,0.92);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px #764ba220, 0 2px 16px #4facfe33;
+            border: 2px solid #4facfe33;
+            padding: 48px 48px 48px 56px;
+            max-width: 700px;
+            margin-right: 1vw;
+        }
+        .about-title { font-size: 2.2rem; font-weight: 800; color: #22223b; margin-bottom: 18px; }
+        .about-mission { font-size: 1.1rem; color: #4a4e69; margin-bottom: 24px; font-style: italic; }
+        .about-list { margin-bottom: 24px; }
+        .about-list li { margin-bottom: 12px; font-size: 1.08rem; color: #22223b; list-style: none; }
+        .about-list li:before { content: '✔️'; margin-right: 10px; color: #10b981; }
+        .about-desc { color: #4a4e69; font-size: 1.05rem; }
+        nav {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(8px);
+            padding: 18px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
+            border-radius: 0 0 18px 18px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 24px #764ba220;
         }
-        
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
+    /* .nav-left style removed to use style.css only */
+        .nav-right {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-right: 32px;
         }
-        
-        .nav-links a {
-            color: white;
+        .nav-right a {
+            color: #fff;
+            text-shadow: 0 2px 8px #4facfe55, 0 1px 0 #333;
             text-decoration: none;
-            margin: 0 1rem;
-            font-weight: 500;
+            font-weight: 700;
+            margin: 0 8px;
+            font-size: 1.1rem;
+            padding: 8px 18px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s, text-shadow 0.2s;
         }
-        
-        .nav-links a:hover {
-            color: #4facfe;
+        .nav-right a:hover, .nav-right a.active {
+            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+            color: #fff;
+            text-shadow: 0 4px 16px #00f2fe99, 0 1px 0 #333;
         }
+        /* .nav-left style removed to use style.css only */
+            .nav-left {
+                display: flex;
+                align-items: center;
+                font-size: 2.6rem;
+                font-weight: 900;
+                color: #fff;
+                margin-left: 32px;
+                text-shadow: 0 2px 16px #4facfecc, 0 1px 0 #333;
+                letter-spacing: 1.5px;
+                user-select: none;
+            }
         
         /* Main Container */
         .container {
@@ -296,19 +356,38 @@
     </style>
 </head>
 <body>
-    <script>
-    // Redirect to login if not logged in
-    if (!isUserLoggedIn()) {
-        window.location.href = 'login.html';
-    }
-    </script>
-    <nav class="navbar">
-        <div class="logo">🔍 TruthLens</div>
-        <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="user_dashboard.html" class="user_dashboard-nav-btn active">Dashboard</a>
-            <a href="about.html">About</a>
-            <button id="themeBtn" style="background:none; border:1px solid rgba(255,255,255,0.3); color:white; padding:0.5rem; border-radius:6px; cursor:pointer;">🌙</button>
+    <nav id="navbar">
+    <div class="nav-left">🔍TruthLens</div>
+        <div class="nav-right">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="features.html" class="nav-link">Features</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="user_dashboard.html" class="nav-link active">Dashboard</a>
+            <!-- <a href="login.html" class="login-nav-btn" id="loginNavBtn" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-in-alt"></i> Login</a> -->
+            <a href="#" class="logout-nav-btn" id="logoutNavBtn" style="margin-left: 12px; border: 1.5px solid #ef4444; background: #fff; color: #ef4444; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #ef444422; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>
+</nav>
+
+<script>
+// --- Auth Navbar Logic ---
+function updateNavbarAuth() {
+    var logoutBtn = document.getElementById('logoutNavBtn');
+    if (logoutBtn) logoutBtn.style.display = 'flex';
+}
+updateNavbarAuth();
+// Logout click handler
+var logoutBtn = document.getElementById('logoutNavBtn');
+if (logoutBtn) {
+    logoutBtn.onclick = function(e) {
+        e.preventDefault();
+        localStorage.removeItem('isLoggedIn');
+        updateNavbarAuth();
+    window.location.href = 'index.html';
+    };
+}
+window.addEventListener('storage', updateNavbarAuth);
+</script>
         </div>
     </nav>
 
@@ -409,7 +488,7 @@
                 </div>
                 
                 <div class="quick-actions">
-                    <a href="fake_news_detector.html" class="action-btn">
+                    <a href="index.html" class="action-btn">
                         <i class="fas fa-plus"></i>
                         New Analysis
                     </a>
