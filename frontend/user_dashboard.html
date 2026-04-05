@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TruthLens Pro - Dashboard</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         
@@ -364,8 +365,8 @@
             <a href="features.html" class="nav-link">Features</a>
             <a href="contact.html" class="nav-link">Contact</a>
             <a href="user_dashboard.html" class="nav-link active">Dashboard</a>
-            <!-- <a href="login.html" class="login-nav-btn" id="loginNavBtn" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-in-alt"></i> Login</a> -->
-            <a href="#" class="logout-nav-btn" id="logoutNavBtn" style="margin-left: 12px; border: 1.5px solid #ef4444; background: #fff; color: #ef4444; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #ef444422; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <!-- <a href="login.html" class="login-nav-btn" id="loginNavBtn" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a> -->
+            <a href="#" class="logout-nav-btn" id="logoutNavBtn" style="margin-left: 12px; border: 1.5px solid #ef4444; background: #fff; color: #ef4444; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #ef444422; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
 </div>
 </nav>
 
@@ -427,7 +428,7 @@ window.addEventListener('storage', updateNavbarAuth);
             <!-- Recent Activity -->
             <div class="content-card">
                 <div class="card-title">
-                    <i class="fas fa-clock"></i>
+                    <i class="fa-solid fa-clock"></i>
                     Recent Activity
                 </div>
                 
@@ -438,7 +439,7 @@ window.addEventListener('storage', updateNavbarAuth);
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <div class="activity-time">2 hours ago</div>
                                 <button class="delete-btn" onclick="deleteActivity(this)" title="Delete this analysis">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </div>
                         </div>
@@ -452,7 +453,7 @@ window.addEventListener('storage', updateNavbarAuth);
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <div class="activity-time">5 hours ago</div>
                                 <button class="delete-btn" onclick="deleteActivity(this)" title="Delete this analysis">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </div>
                         </div>
@@ -466,7 +467,7 @@ window.addEventListener('storage', updateNavbarAuth);
                             <div style="display: flex; align-items: center; gap: 1rem;">
                                 <div class="activity-time">1 day ago</div>
                                 <button class="delete-btn" onclick="deleteActivity(this)" title="Delete this analysis">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fa-solid fa-trash-can"></i>
                                 </button>
                             </div>
                         </div>
@@ -483,18 +484,18 @@ window.addEventListener('storage', updateNavbarAuth);
             <!-- Quick Actions -->
             <div class="content-card">
                 <div class="card-title">
-                    <i class="fas fa-bolt"></i>
+                    <i class="fa-solid fa-bolt"></i>
                     Quick Actions
                 </div>
                 
                 <div class="quick-actions">
-                    <a href="index.html" class="action-btn">
-                        <i class="fas fa-plus"></i>
+                    <a href="fake_news_detector.html" class="action-btn">
+                        <i class="fa-solid fa-plus"></i>
                         New Analysis
                     </a>
                     
                     <button class="action-btn secondary" onclick="exportData()">
-                        <i class="fas fa-download"></i>
+                        <i class="fa-solid fa-download"></i>
                         Download History
                     </button>
                 </div>
@@ -513,7 +514,7 @@ window.addEventListener('storage', updateNavbarAuth);
         <!-- History Table (Hidden by default) -->
         <div class="content-card" id="historySection" style="margin-top: 2rem; display: none;">
             <div class="card-title">
-                <i class="fas fa-history"></i>
+                <i class="fa-solid fa-clock-rotate-left"></i>
                 Complete History
                 <button onclick="hideHistory()" style="background:none; border:none; color:white; margin-left:auto; cursor:pointer;">✕</button>
             </div>
@@ -535,7 +536,7 @@ window.addEventListener('storage', updateNavbarAuth);
                         <td>Health</td>
                         <td>
                             <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
-                                <i class="fas fa-trash"></i>
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
                     </tr>
@@ -546,7 +547,7 @@ window.addEventListener('storage', updateNavbarAuth);
                         <td>Politics</td>
                         <td>
                             <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
-                                <i class="fas fa-trash"></i>
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
                     </tr>
@@ -557,7 +558,7 @@ window.addEventListener('storage', updateNavbarAuth);
                         <td>Social</td>
                         <td>
                             <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
-                                <i class="fas fa-trash"></i>
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
                     </tr>
@@ -568,7 +569,7 @@ window.addEventListener('storage', updateNavbarAuth);
                         <td>Economics</td>
                         <td>
                             <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
-                                <i class="fas fa-trash"></i>
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
                     </tr>
@@ -579,7 +580,7 @@ window.addEventListener('storage', updateNavbarAuth);
                         <td>Technology</td>
                         <td>
                             <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
-                                <i class="fas fa-trash"></i>
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </td>
                     </tr>
@@ -589,11 +590,14 @@ window.addEventListener('storage', updateNavbarAuth);
     </div>
 
     <script>
-        // Theme Toggle
-        document.getElementById('themeBtn').addEventListener('click', function() {
-            document.body.classList.toggle('dark-mode');
-            this.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-        });
+        // Theme Toggle (only if button exists)
+        const themeBtn = document.getElementById('themeBtn');
+        if (themeBtn) {
+            themeBtn.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                this.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            });
+        }
 
         // Show/Hide History
         function showAllHistory() {
@@ -631,15 +635,8 @@ window.addEventListener('storage', updateNavbarAuth);
         // Clear History
         function clearHistory() {
             if (confirm('Are you sure you want to clear all history?')) {
-                document.getElementById('activityList').innerHTML = '<p style="text-align:center; opacity:0.7; padding:2rem;">No recent activity</p>';
-                document.getElementById('historyTableBody').innerHTML = '<tr><td colspan="4" style="text-align:center; opacity:0.7; padding:2rem;">No history available</td></tr>';
-                
-                // Reset stats
-                document.getElementById('totalChecks').textContent = '0';
-                document.getElementById('truthfulCount').textContent = '0';
-                document.getElementById('suspiciousCount').textContent = '0';
-                document.getElementById('accuracyScore').textContent = '0%';
-                
+                localStorage.setItem('analysisHistory', JSON.stringify([]));
+                loadUserData();
                 showMessage('History cleared successfully!');
             }
         }
@@ -661,7 +658,7 @@ window.addEventListener('storage', updateNavbarAuth);
                 
                 setTimeout(() => {
                     activityItem.remove();
-                    updateStats(-1);
+                    loadUserData();
                     showMessage('Analysis deleted');
                 }, 300);
             }
@@ -688,7 +685,7 @@ window.addEventListener('storage', updateNavbarAuth);
                 
                 setTimeout(() => {
                     row.remove();
-                    updateStats(-1);
+                    loadUserData();
                     showMessage('Analysis deleted');
                 }, 300);
             }
@@ -708,17 +705,35 @@ window.addEventListener('storage', updateNavbarAuth);
             localStorage.setItem('analysisHistory', JSON.stringify(history));
         }
         
+        function normalizeScore(value) {
+            if (typeof value === 'number' && !Number.isNaN(value)) {
+                return Math.max(0, Math.min(100, value));
+            }
+
+            const scoreText = String(value || '').toLowerCase().trim();
+            const numericMatch = scoreText.match(/\d+/);
+            if (numericMatch) {
+                return Math.max(0, Math.min(100, parseInt(numericMatch[0], 10)));
+            }
+
+            if (scoreText.includes('real')) return 85;
+            if (scoreText.includes('fake')) return 20;
+            if (scoreText.includes('review')) return 50;
+            return 0;
+        }
+
         // Load Real Data (Connect this to your actual data)
         function loadUserData() {
             // Get data from localStorage or your backend
             const history = JSON.parse(localStorage.getItem('analysisHistory') || '[]');
+            const normalizedScores = history.map(item => normalizeScore(item.score));
             
             // Update stats based on real data
             document.getElementById('totalChecks').textContent = history.length;
             
             // Count truthful vs suspicious
-            const truthful = history.filter(item => item.score > 70).length;
-            const suspicious = history.filter(item => item.score < 50).length;
+            const truthful = normalizedScores.filter(score => score >= 70).length;
+            const suspicious = normalizedScores.filter(score => score < 50).length;
             
             document.getElementById('truthfulCount').textContent = truthful;
             document.getElementById('suspiciousCount').textContent = suspicious;
@@ -729,6 +744,7 @@ window.addEventListener('storage', updateNavbarAuth);
             
             // Load recent activity
             loadRecentActivity(history);
+            renderHistoryTable(history);
         }
         
         function loadRecentActivity(history) {
@@ -743,7 +759,9 @@ window.addEventListener('storage', updateNavbarAuth);
             activityList.innerHTML = '';
             
             recentItems.forEach(item => {
-                const scoreClass = item.score > 70 ? 'score-high' : item.score > 50 ? 'score-medium' : 'score-low';
+                const normalizedScore = normalizeScore(item.score);
+                const scoreClass = normalizedScore >= 70 ? 'score-high' : normalizedScore >= 50 ? 'score-medium' : 'score-low';
+                const scoreLabel = typeof item.score === 'number' ? `Truth: ${normalizedScore}%` : (item.score || `Truth: ${normalizedScore}%`);
                 
                 const activityElement = document.createElement('div');
                 activityElement.className = 'activity-item';
@@ -753,15 +771,48 @@ window.addEventListener('storage', updateNavbarAuth);
                         <div style="display: flex; align-items: center; gap: 1rem;">
                             <div class="activity-time">${item.time}</div>
                             <button class="delete-btn" onclick="deleteActivity(this)" title="Delete this analysis">
-                                <i class="fas fa-trash"></i>
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </div>
                     </div>
                     <div class="activity-text">${item.content}</div>
-                    <span class="score-badge ${scoreClass}">Truth: ${item.score}%</span>
+                    <span class="score-badge ${scoreClass}">${scoreLabel}</span>
                 `;
                 
                 activityList.appendChild(activityElement);
+            });
+        }
+
+        function renderHistoryTable(history) {
+            const tableBody = document.getElementById('historyTableBody');
+
+            if (!history || history.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center; opacity:0.7; padding:2rem;">No history available</td></tr>';
+                return;
+            }
+
+            tableBody.innerHTML = '';
+
+            history.forEach(item => {
+                const normalizedScore = normalizeScore(item.score);
+                const scoreClass = normalizedScore >= 70 ? 'score-high' : normalizedScore >= 50 ? 'score-medium' : 'score-low';
+                const scoreLabel = typeof item.score === 'number' ? `${normalizedScore}%` : (item.score || `${normalizedScore}%`);
+                const contentType = normalizedScore >= 70 ? 'Trusted' : normalizedScore >= 50 ? 'Review' : 'Suspicious';
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.time || '-'}</td>
+                    <td>${item.title || (item.content || '').substring(0, 40) || 'Untitled'}</td>
+                    <td><span class="score-badge ${scoreClass}">${scoreLabel}</span></td>
+                    <td>${contentType}</td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteTableRow(this)" title="Delete this analysis">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
             });
         }
         
@@ -859,9 +910,6 @@ window.addEventListener('storage', updateNavbarAuth);
         window.addEventListener('load', function() {
             // Load real user data instead of demo data
             loadUserData();
-            
-            // Start auto-refresh for new analyses
-            simulateNewAnalysis();
         });
     </script>
 </body>

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel="stylesheet" href="responsive.css">
     <title>Login - TruthLens</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         nav {
             background: rgba(255,255,255,0.15);
@@ -198,7 +199,7 @@
             <a href="features.html">Features</a>
             <a href="contact.html">Contact</a>
             <a href="user_dashboard.html" class="nav-link">Dashboard</a>
-            <a href="login.html" class="login-nav-btn active" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="login.html" class="login-nav-btn active" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
         </div>
     </nav>
     <div class="login-hero">
@@ -206,20 +207,21 @@
             <div class="login-hero" style="align-items: center; justify-content: center; min-height: 80vh;">
                 <div class="login-form-card" style="display: flex; flex-direction: row; align-items: center; background: #fff; border-radius: 24px; box-shadow: 0 8px 32px #764ba220; padding: 0; max-width: 1280px; width: 100%; min-width: 340px; overflow: hidden;">
                     <div class="login-image-box" style="flex: 1 1 440px; display: flex; align-items: center; justify-content: center; background: none; height: 100%; min-width: 340px;">
-                        <img src="login.jpg" alt="Login Illustration" style="max-width: 600px; width: 44vw; min-width: 340px; height: auto; border-radius: 24px 0 0 24px; background: none; box-shadow: none; object-fit: contain; display: block; margin: 48px 0;" loading="lazy" />
+                        <img src="/static/login.jpg" alt="Login Illustration" style="max-width: 600px; width: 44vw; min-width: 340px; height: auto; border-radius: 24px 0 0 24px; background: none; box-shadow: none; object-fit: contain; display: block; margin: 48px 0;" loading="lazy" />
                     </div>
                     <div class="login-form-box" style="flex: 1 1 440px; max-width: 540px; min-width: 340px; padding: 64px 56px 64px 56px; margin: 0; background: none; box-shadow: none; border-radius: 0;">
                         <h1>Login</h1>
                         <form class="login-form" id="loginForm" autocomplete="off">
-                            <label for="username"><i class="fas fa-user"></i> Username</label>
+                            <label for="username"><i class="fa-solid fa-user"></i> Username</label>
                             <input type="text" id="username" name="username" required>
-                            <label for="password"><i class="fas fa-lock"></i> Password</label>
+                            <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
                             <input type="password" id="password" name="password" required>
                             <div class="login-form-row">
                                 <label class="remember"><input type="checkbox" id="remember"> Remember me</label>
                                 <a href="#" class="forgot">Forgot password?</a>
                             </div>
-                            <button type="submit">Login</button>
+                            <button type="submit" id="loginBtn">Login</button>
+                            <div id="errorMsg" style="color: #ef4444; margin-top: 12px; display: none; font-size: 0.9rem;"></div>
                             <div class="login-form-links">
                                 <span>Don't have an account? <a href="register.html" class="register-link">Register here</a></span>
                             </div>
@@ -227,17 +229,100 @@
                     </div>
                 </div>
             </div>
-    </script>
 </body>
 <script>
-// Redirect to fake_news_detector.html after login
+// Backend API Login Integration
+const API_BASE_CANDIDATES = [
+    `${window.location.origin}/api`,
+    'http://127.0.0.1:8000/api',
+    'http://localhost:8000/api'
+].filter((value, index, array) => value.startsWith('http') && array.indexOf(value) === index);
+
+const TOKEN_ENDPOINT = '/auth/token/';
+
+async function tryLoginAcrossOrigins(payload) {
+    let lastError = 'Login failed. Please check credentials.';
+
+    for (const baseUrl of API_BASE_CANDIDATES) {
+        try {
+            const response = await fetch(`${baseUrl}${TOKEN_ENDPOINT}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            let data = {};
+            try {
+                data = await response.json();
+            } catch (_parseErr) {
+                data = {};
+            }
+
+            if (response.ok && data.access && data.refresh) {
+                return { ok: true, data };
+            }
+
+            if (response.status === 401) {
+                lastError = data.detail || 'Invalid username or password.';
+            } else if (response.status === 400) {
+                lastError = data.detail || 'Invalid request. Please verify input.';
+            } else {
+                lastError = data.detail || `Login failed (${response.status}).`;
+            }
+        } catch (_networkErr) {
+            lastError = 'Server connection error. Backend runserver check karein.';
+        }
+    }
+
+    return { ok: false, error: lastError };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    var loginForm = document.getElementById('loginForm');
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    
     if (loginForm) {
-        loginForm.addEventListener('submit', function(e) {
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            // You can add real validation here if needed
-            window.location.href = 'fake_news_detector.html';
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Disable button and show loading
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Logging in...';
+            errorMsg.style.display = 'none';
+            
+            try {
+                const result = await tryLoginAcrossOrigins({ username, password });
+
+                if (result.ok) {
+                    const data = result.data;
+                    // Store tokens in localStorage
+                    localStorage.setItem('access_token', data.access);
+                    localStorage.setItem('refresh_token', data.refresh);
+                    localStorage.setItem('username', data.username || username);
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
+                    // Redirect to detector page
+                    window.location.href = '/static/fake_news_detector.html';
+                } else {
+                    // Show error message
+                    errorMsg.textContent = result.error || 'Invalid username or password';
+                    errorMsg.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.textContent = 'Login';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMsg.textContent = 'Server connection error. Please make sure backend is running.';
+                errorMsg.style.display = 'block';
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Login';
+            }
         });
     }
 });

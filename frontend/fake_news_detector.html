@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="responsive.css">
     <title>TruthLens Pro - AI-Powered Truth Detection</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
         
@@ -411,36 +412,50 @@
         
         .score-display {
             position: relative;
-            width: 120px;
-            height: 120px;
-        }
-        
-        .score-circle {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
+            width: auto;
+            min-width: 320px;
+            height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        
+        .classification-label {
+            min-width: 300px;
+            padding: 30px 40px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .classification-label.fake-news {
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            box-shadow: 0 10px 40px rgba(239, 68, 68, 0.4);
+        }
+        
+        .classification-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .classification-text {
+            font-size: 2.5rem;
             font-weight: 900;
-            font-size: 2rem;
             color: white;
-            position: relative;
-            overflow: hidden;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
         }
         
-        .score-circle::before {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 0;
-        }
-        
-        .score-text {
-            position: relative;
-            z-index: 1;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
         
         .score-high { 
@@ -614,7 +629,7 @@
             <a href="contact.html">Contact</a>
             <a href="user_dashboard.html">Dashboard</a>
             <!-- <a href="login.html" class="login-nav-btn" id="loginNavBtn" style="margin-left: 12px; border: 1.5px solid #4facfe; background: #fff; color: #4facfe; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #4facfe22; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-in-alt"></i> Login</a> -->
-            <a href="#" class="logout-nav-btn" id="logoutNavBtn" style="margin-left: 12px; border: 1.5px solid #ef4444; background: #fff; color: #ef4444; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #ef444422; display: flex; align-items: center; gap: 8px;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="#" class="logout-nav-btn" id="logoutNavBtn" style="margin-left: 12px; border: 1.5px solid #ef4444; background: #fff; color: #ef4444; font-weight: 700; border-radius: 8px; padding: 8px 22px; box-shadow: 0 2px 8px #ef444422; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </div>
     </nav>
 
@@ -634,14 +649,14 @@
         <div class="main-card">
             <div class="input-section">
                 <div class="input-tabs">
-                    <button class="tab-btn active" onclick="switchTab('text')">
-                        <i class="fas fa-edit"></i> Text Analysis
+                    <button class="tab-btn active" onclick="switchTab('text', this)">
+                        <i class="fa-solid fa-pen-to-square"></i> Text Analysis
                     </button>
-                    <button class="tab-btn" onclick="switchTab('url')">
-                        <i class="fas fa-link"></i> URL Verification
+                    <button class="tab-btn" onclick="switchTab('url', this)">
+                        <i class="fa-solid fa-link"></i> URL Verification
                     </button>
-                    <button class="tab-btn" onclick="switchTab('image')">
-                        <i class="fas fa-image"></i> Image Check
+                    <button class="tab-btn" onclick="switchTab('image', this)">
+                        <i class="fa-solid fa-image"></i> Image Check
                     </button>
                 </div>
                 
@@ -650,7 +665,7 @@
                         <label for="newsText" data-key="textLabel">📝 News Content</label>
                         <div class="input-wrapper">
                             <textarea id="newsText" class="input-field text-input" rows="6" data-key-placeholder="textPlaceholder" placeholder="Paste the news article text here..."></textarea>
-                            <i class="fas fa-align-left input-icon"></i>
+                            <i class="fa-solid fa-align-left input-icon"></i>
                             <button id="voiceBtn" type="button" style="margin-top:10px; background:#06b6d4; color:white; border:none; border-radius:8px; padding:8px 16px; cursor:pointer;">🎤 Speak News</button>
                         </div>
                     </div>
@@ -661,7 +676,7 @@
                         <label for="newsUrl" data-key="urlLabel">📰 News Article URL (Optional)</label>
                         <div class="input-wrapper">
                             <input type="url" id="newsUrl" class="input-field" data-key-placeholder="urlPlaceholder" placeholder="Paste news article URL (optional)">
-                            <i class="fas fa-link input-icon"></i>
+                            <i class="fa-solid fa-link input-icon"></i>
                         </div>
                     </div>
                 </div>
@@ -671,13 +686,13 @@
                         <label class="input-label">🖼️ Upload Image for Verification</label>
                         <div class="input-wrapper">
                             <input type="file" id="newsImage" class="input-field" accept="image/*">
-                            <i class="fas fa-image input-icon"></i>
+                            <i class="fa-solid fa-image input-icon"></i>
                         </div>
                     </div>
                 </div>
-                
+               
                 <button class="analyze-btn" onclick="analyzeContent()" data-key="analyzeBtn">
-                    <i class="fas fa-search"></i> Analyze for Truth
+                    <i class="fa-solid fa-magnifying-glass"></i> Analyze for Truth
                 </button>
             </div>
             
@@ -696,35 +711,30 @@
                 <div class="credibility-card">
                     <div class="credibility-main">
                         <div class="credibility-info">
-                            <h3>Truth Credibility Score</h3>
-                            <p>Based on 12 advanced AI parameters</p>
+                            <h3>Classification Result</h3>
+                            <p>Based on 8 advanced AI parameters</p>
                         </div>
                         <div class="score-display">
-                            <div class="score-circle score-high" id="scoreCircle">
-                                <span class="score-text" id="scoreText">87%</span>
+                            <div class="classification-label" id="classificationLabel">
+                                <span class="classification-icon" id="classificationIcon">✅</span>
+                                <span class="classification-text" id="classificationText">REAL NEWS</span>
                             </div>
                         </div>
                     </div>
                     <div id="resultExplanation" style="margin-top:10px; font-size:1rem; color:#333;"></div>
                     <div id="highlightedText" style="margin-top:10px; font-size:0.95rem; color:#d97706;"></div>
-                    <div id="shareCopyBtns" style="margin-top:10px; display:flex; gap:10px;">
-                        <button id="copyResultBtn" style="padding:6px 12px; border-radius:6px; border:none; background:#6366f1; color:white; cursor:pointer;">Copy Result</button>
-                        <button id="shareResultBtn" style="padding:6px 12px; border-radius:6px; border:none; background:#10b981; color:white; cursor:pointer;">Share Result</button>
-                    </div>
                     <div id="feedbackBtns" style="margin-top:10px;">
-                        <span>Was this prediction helpful?</span>
-                        <button id="feedbackYes" style="margin-left:8px; background:#10b981; color:white; border:none; border-radius:6px; padding:4px 10px;">Yes</button>
-                        <button id="feedbackNo" style="margin-left:4px; background:#ef4444; color:white; border:none; border-radius:6px; padding:4px 10px;">No</button>
+                        
+                        
                         <span id="feedbackMsg" style="margin-left:10px; color:#6366f1;"></span>
                     </div>
-                    <div id="historySection" style="margin-top:18px;">
-                        <strong>History:</strong>
-                        <ul id="historyList" style="font-size:0.95rem; color:#374151; margin:0; padding-left:18px;"></ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="analysis-grid" id="analysisGrid" style="display:none;">
+                    <!-- Debug: Raw API Response (collapsible) -->
+                    <details id="debugSection" style="margin-top:10px;">
+                        <summary style="cursor:pointer; color:#4b5563;">Debug: Raw API Response</summary>
+                        <pre id="debugJson" style="white-space:pre-wrap; background:#f3f4f6; padding:10px; border-radius:6px; border:1px solid #e5e7eb; max-height:240px; overflow:auto; margin-top:8px;"></pre>
+                    </details>
+                    <!-- Move analysis details inside the results area so they appear right after copy/share/history -->
+                    <div class="analysis-grid" id="analysisGrid" style="display:none; margin-top:18px;">
                         <div class="analysis-item">
                             <span class="analysis-icon">🌐</span>
                             <h4>Language Detected</h4>
@@ -766,12 +776,44 @@
                             <div class="analysis-value" id="bot">None</div>
                         </div>
                     </div>
+
+                    <div id="historySection" style="margin-top:18px;">
+                        <strong>History:</strong>
+                        <ul id="historyList" style="font-size:0.95rem; color:#374151; margin:0; padding-left:18px;"></ul>
+                    </div>
+
+                    <div id="shareCopyBtns" style="margin-top:10px; display:flex; gap:10px;">
+                        <button id="copyResultBtn" style="padding:6px 12px; border-radius:6px; border:none; background:#6366f1; color:white; cursor:pointer;">Copy Result</button>
+                        <button id="shareResultBtn" style="padding:6px 12px; border-radius:6px; border:none; background:#10b981; color:white; cursor:pointer;">Share Result</button>
+                    </div>
                 </div>
             </div>
         </div>
        
 
     <script>
+        // Backend API Configuration
+        const API_BASE_URL =
+            (window.location.port === '8000')
+                ? `${window.location.origin}/api`
+                : 'http://127.0.0.1:8000/api';
+        
+        // Get access token from localStorage
+        function getAccessToken() {
+            return localStorage.getItem('access_token');
+        }
+        
+        // Check if user is authenticated
+        function checkAuth() {
+            const token = getAccessToken();
+            if (!token) {
+                alert('Please login first!');
+                window.location.href = 'login.html';
+                return false;
+            }
+            return true;
+        }
+        
         // --- Auth Navbar Logic ---
         function updateNavbarAuth() {
             // Ab sirf logout button dikhana hai
@@ -785,6 +827,9 @@
             logoutBtn.onclick = function(e) {
                 e.preventDefault();
                 localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+                localStorage.removeItem('username');
                 updateNavbarAuth();
                 window.location.href = 'index.html';
             };
@@ -801,10 +846,12 @@
         const darkStyle = document.createElement('style');
         darkStyle.innerHTML = `
             body.dark-mode { background: #18181b !important; color: #f3f4f6 !important; }
-            body.dark-mode .main-card, body.dark-mode .input-field { background: #23232a !important; color: #f3f4f6 !important; }
+            body.dark-mode .classification-label { border: 3px solid rgba(255, 255, 255, 0.2) !important; }
+            body.dark-mode .classification-text { color: #fff !important; }
             body.dark-mode .input-field::placeholder { color: #a1a1aa !important; }
             body.dark-mode .analyze-btn, body.dark-mode #voiceBtn { background: #6366f1 !important; color: #fff !important; }
-            body.dark-mode .score-circle { background: #23232a !important; color: #fff !important; }
+            body.dark-mode .classification-label { border: 3px solid rgba(255, 255, 255, 0.2) !important; }
+            body.dark-mode .classification-text { color: #fff !important; }
         `;
         document.head.appendChild(darkStyle);
 
@@ -830,22 +877,50 @@
         }
 
         // --- History ---
-        function saveToHistory(news, result) {
-            let history = JSON.parse(localStorage.getItem('newsHistory') || '[]');
-            history.unshift({ news, result, time: new Date().toLocaleString() });
-            if (history.length > 10) history = history.slice(0, 10);
-            localStorage.setItem('newsHistory', JSON.stringify(history));
+        // Save a structured history entry to shared storage key `analysisHistory` so the
+        // dashboard (`user_dashboard.html`) can show the full history. Detector page will
+        // only render the most recent 3 items for brevity.
+        function saveToHistory(entry) {
+            // entry should be an object: { title, content, score, time }
+            const historyKey = 'analysisHistory';
+            let history = JSON.parse(localStorage.getItem(historyKey) || '[]');
+            history.unshift(entry);
+            // Keep a reasonable cap to avoid unbounded growth (e.g., 200 entries)
+            if (history.length > 200) history = history.slice(0, 200);
+            localStorage.setItem(historyKey, JSON.stringify(history));
             renderHistory();
         }
+
         function renderHistory() {
-            let history = JSON.parse(localStorage.getItem('newsHistory') || '[]');
+            const historyKey = 'analysisHistory';
+            let history = JSON.parse(localStorage.getItem(historyKey) || '[]');
             const list = document.getElementById('historyList');
             list.innerHTML = '';
-            history.forEach(item => {
+
+            if (!history || history.length === 0) {
+                list.innerHTML = '<li style="opacity:0.7;">No recent analyses</li>';
+                return;
+            }
+
+            // Show only the most recent 3 items on the detector page
+            const recent = history.slice(0, 3);
+            recent.forEach(item => {
                 const li = document.createElement('li');
-                li.textContent = `${item.news.substring(0, 40)}... [${item.result}] (${item.time})`;
+                const title = item.title || (item.content || '').substring(0, 40);
+                const scoreDisplay = item.score || 'N/A';
+                const scoreStr = String(scoreDisplay);
+                const isReal = scoreStr.toLowerCase().includes('real');
+                const colorStyle = isReal ? 'color:#10b981;' : 'color:#ef4444;';
+                li.innerHTML = `${title}... <strong style="${colorStyle}">[${scoreStr}]</strong> <span style="opacity:0.7;">(${item.time})</span>`;
                 list.appendChild(li);
             });
+
+            // Add a small link to view the full history on the dashboard
+            const viewAllLi = document.createElement('li');
+            viewAllLi.style.listStyle = 'none';
+            viewAllLi.style.marginTop = '8px';
+            viewAllLi.innerHTML = `<a href="user_dashboard.html" style="color:#10b981; font-weight:600; text-decoration:none;">View full history in Dashboard →</a>`;
+            list.appendChild(viewAllLi);
         }
         renderHistory();
 
@@ -866,12 +941,20 @@
         };
 
         // --- Feedback ---
-        document.getElementById('feedbackYes').onclick = function() {
-            document.getElementById('feedbackMsg').textContent = 'Thank you for your feedback!';
-        };
-        document.getElementById('feedbackNo').onclick = function() {
-            document.getElementById('feedbackMsg').textContent = 'We appreciate your input!';
-        };
+        const feedbackYesBtn = document.getElementById('feedbackYes');
+        const feedbackNoBtn = document.getElementById('feedbackNo');
+        if (feedbackYesBtn) {
+            feedbackYesBtn.onclick = function() {
+                const msgEl = document.getElementById('feedbackMsg');
+                if (msgEl) msgEl.textContent = 'Thank you for your feedback!';
+            };
+        }
+        if (feedbackNoBtn) {
+            feedbackNoBtn.onclick = function() {
+                const msgEl = document.getElementById('feedbackMsg');
+                if (msgEl) msgEl.textContent = 'We appreciate your input!';
+            };
+        }
 
         // --- Result Explanation & Highlights ---
         function explainResult(news, result) {
@@ -901,11 +984,19 @@
             origDisplayEnhancedResults(results);
             const news = document.getElementById('newsText').value;
             explainResult(news, results);
-            saveToHistory(news, results.score + '%');
+            // Save structured entry so dashboard can show full history
+            const entry = {
+                title: (news || '').substring(0, 40),
+                content: news,
+                score: results && typeof results.score === 'number' ? results.score : (parseInt(results) || 0),
+                time: new Date().toLocaleString()
+            };
+            saveToHistory(entry);
         };
-        let currentTab = 'text';
+        // Track active tab (hoisted to avoid temporal dead zone errors)
+        var currentTab = 'text';
         
-        function switchTab(tabName) {
+        function switchTab(tabName, el) {
             // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.style.display = 'none';
@@ -920,21 +1011,44 @@
             document.getElementById(tabName + '-tab').style.display = 'block';
             
             // Add active class to clicked button
-            event.target.classList.add('active');
+            if (el && el.classList) {
+                el.classList.add('active');
+            }
             
             currentTab = tabName;
         }
         
         function analyzeContent() {
             let content = '';
+            let title = '';
+            let sourceUrl = '';
+            
             if (currentTab === 'text') {
+                // Text analysis — no auth required
                 content = document.getElementById('newsText').value;
+                title = content.substring(0, 50); // Use first 50 chars as title
             } else if (currentTab === 'url') {
-                content = document.getElementById('newsUrl').value;
+                // URL verification via backend verify-source (GET) — no auth required
+                const urlInput = document.getElementById('newsUrl').value;
+                if (!urlInput) {
+                    alert('Please paste a URL to verify.');
+                    return;
+                }
+                showLoading();
+                callVerifySourceAPI(urlInput);
+                return;
             } else if (currentTab === 'image') {
                 const file = document.getElementById('newsImage').files[0];
-                if (file) content = file.name;
+                if (!file) {
+                    alert('Please upload an image to analyze.');
+                    return;
+                }
+                // Trigger image-specific API and exit
+                showLoading();
+                callImagePredictionAPI(file);
+                return;
             }
+            
             // Hide results and analysis grid before analysis
             document.getElementById('results').style.display = 'none';
             document.getElementById('analysisGrid').style.display = 'none';
@@ -947,11 +1061,8 @@
             // Show loading with enhanced animation
             showLoading();
             
-            // Hide results
-            document.getElementById('results').style.display = 'none';
-            
-            // Simulate advanced AI analysis
-            simulateAdvancedAnalysis(content);
+            // Call backend API
+            callPredictionAPI(title, content, sourceUrl);
         }
         
         function showLoading() {
@@ -994,6 +1105,336 @@
             }, 4000); // Longer loading for premium feel
         }
         
+        // Backend API Call Function
+        async function callPredictionAPI(title, content, sourceUrl = '') {
+            try {
+                const token = getAccessToken();
+                
+                const response = await fetch(`${API_BASE_URL}/predict/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        content: content,
+                        source_url: sourceUrl
+                    })
+                });
+                
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+                
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        alert('Session expired. Please login again.');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    throw new Error(`API Error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('API Response:', data);
+                
+                // Display results from backend
+                displayBackendResults(data);
+                
+                // Show results section
+                const resultsElement = document.getElementById('results');
+                resultsElement.style.display = 'block';
+                document.getElementById('analysisGrid').style.display = 'grid';
+                resultsElement.scrollIntoView({ behavior: 'smooth' });
+                
+            } catch (error) {
+                console.error('API Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                alert('Analysis failed. Please check if backend server is running.');
+            }
+        }
+
+        // Backend API Call Function for Image
+        async function callImagePredictionAPI(file) {
+            try {
+                const token = getAccessToken();
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('title', file.name || 'Uploaded Image');
+
+                // Build headers only if token exists (endpoint allows Any)
+                const headers = {};
+                if (token) headers['Authorization'] = `Bearer ${token}`;
+
+                const response = await fetch(`${API_BASE_URL}/predict-image/`, {
+                    method: 'POST',
+                    headers,
+                    body: formData
+                });
+
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        alert('Session expired. Please login again.');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Image API Response:', data);
+                // Explicit quick view for label/score to avoid drilling into object
+                try {
+                    console.log('Image label:', data?.prediction?.label, 'score:', data?.prediction?.score);
+                } catch (e) {}
+
+                // Populate Debug panel with raw JSON
+                const dbg = document.getElementById('debugJson');
+                if (dbg) {
+                    dbg.textContent = JSON.stringify(data, null, 2);
+                }
+
+                displayBackendResults(data);
+
+                const resultsElement = document.getElementById('results');
+                resultsElement.style.display = 'block';
+                document.getElementById('analysisGrid').style.display = 'grid';
+                resultsElement.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Image API Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                alert('Image analysis failed. Please check if backend server is running.');
+            }
+        }
+
+        // Backend API Call Function for URL verify (GET)
+        async function callVerifySourceAPI(urlToCheck) {
+            try {
+                const token = getAccessToken();
+                const headers = { 'Accept': 'application/json' };
+                if (token) headers['Authorization'] = `Bearer ${token}`; // optional
+
+                const response = await fetch(`${API_BASE_URL}/verify-source/?url=${encodeURIComponent(urlToCheck)}`, {
+                    method: 'GET',
+                    headers
+                });
+
+                // Hide loading
+                document.getElementById('loading').style.display = 'none';
+
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        alert('Session expired. Please login again.');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    throw new Error(`API Error: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Verify API Response:', data);
+
+                // Populate Debug panel with raw JSON
+                const dbg = document.getElementById('debugJson');
+                if (dbg) {
+                    dbg.textContent = JSON.stringify(data, null, 2);
+                }
+
+                // Map verify response to display format
+                const domainVerdict = (data?.domainCheck?.verdict || '').toLowerCase();
+                const summaryVerdict = (data?.summary?.verdict || '').toLowerCase();
+                const verdict = domainVerdict || summaryVerdict || 'mixed';
+                const isReal = verdict === 'likely_real';
+                const isFake = verdict === 'likely_fake' || verdict === 'satire_site';
+                const label = isReal ? 'real' : (isFake ? 'fake' : 'unknown');
+
+                const fakeData = {
+                    article: { title: 'URL Analysis', content: urlToCheck },
+                    prediction: { label: label, score: verdict },
+                    analysis: {
+                        language: data?.languageCode || 'Unknown',
+                        sentiment: 'Neutral',
+                        authority: (data?.domainCheck?.reputation || 'Unknown'),
+                        recency: 'N/A',
+                        links: 'N/A',
+                        bias: isFake ? 'High' : isReal ? 'Low' : 'Medium',
+                        social: 'Mixed',
+                        bot: 'None'
+                    },
+                    domainCheck: data?.domainCheck || null,
+                    summary: data?.summary || null
+                };
+
+                // Show results using existing renderer
+                displayBackendResults(fakeData);
+
+                const resultsElement = document.getElementById('results');
+                resultsElement.style.display = 'block';
+                document.getElementById('analysisGrid').style.display = 'grid';
+                resultsElement.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Verify API Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                alert('URL verification failed. Please check if backend server is running.');
+            }
+        }
+        
+        // Display results from backend API
+        function displayBackendResults(data) {
+            const { article, prediction, analysis } = data;
+            
+            // Update classification label
+            const classificationLabel = document.getElementById('classificationLabel');
+            const classificationText = document.getElementById('classificationText');
+            const classificationIcon = document.getElementById('classificationIcon');
+
+            // Prefer domain-based verdict when available (URL checks), else use prediction label (text checks)
+            const domainVerdict = (data?.domainCheck?.verdict || '').toLowerCase();
+            let labelFromVerdict = prediction?.label?.toLowerCase() || 'unknown';
+            
+            if (domainVerdict) {
+                // URL check with domain verdict
+                const isReal = domainVerdict === 'likely_real';
+                const isFake = domainVerdict === 'likely_fake' || domainVerdict === 'satire_site';
+                labelFromVerdict = isReal ? 'real' : (isFake ? 'fake' : 'unknown');
+            }
+
+            if (labelFromVerdict === 'real') {
+                if (classificationLabel) {
+                    classificationLabel.classList.remove('fake-news');
+                }
+                if (classificationText) classificationText.textContent = 'REAL NEWS';
+                if (classificationIcon) classificationIcon.textContent = '✅';
+            } else if (labelFromVerdict === 'fake') {
+                if (classificationLabel) {
+                    classificationLabel.classList.add('fake-news');
+                }
+                if (classificationText) classificationText.textContent = 'FAKE NEWS';
+                if (classificationIcon) classificationIcon.textContent = '⚠️';
+            } else {
+                // Neutral / insufficient evidence
+                if (classificationLabel) {
+                    classificationLabel.classList.remove('fake-news');
+                }
+                if (classificationText) classificationText.textContent = 'NEEDS REVIEW';
+                if (classificationIcon) classificationIcon.textContent = '❓';
+            }
+            
+            // Update explanation with parameter-based reasoning
+            let explanation = '';
+            if (labelFromVerdict === 'fake') {
+                explanation = '❌ <strong>Classification: FAKE NEWS</strong><br><br>';
+                explanation += 'Our 8-parameter analysis identified multiple red flags in this content:<br>';
+                explanation += '• Check the parameters below to see which indicators failed verification<br>';
+                explanation += '• <strong>Warning:</strong> Please verify from trusted sources before sharing';
+            } else if (labelFromVerdict === 'real') {
+                explanation = '✅ <strong>Classification: REAL NEWS</strong><br><br>';
+                explanation += 'This content passed our comprehensive 8-parameter verification:<br>';
+                explanation += '• Review the parameters below for detailed credibility indicators<br>';
+                explanation += '• <strong>Note:</strong> Always cross-check important information from multiple sources';
+            } else {
+                explanation = '❓ <strong>Classification: NEEDS REVIEW</strong><br><br>';
+                explanation += 'We do not have enough signals to determine credibility:<br>';
+                explanation += '• Try cross-checking on trusted sources (e.g., Reuters, AP)<br>';
+                explanation += '• Look for author, date, and corroborating links';
+            }
+            
+            const resultExplanation = document.getElementById('resultExplanation');
+            if (resultExplanation) resultExplanation.innerHTML = explanation;
+            
+            // Update 8 parameters from backend analysis
+            if (analysis) {
+                const elements = {
+                    'language': analysis.language || 'Unknown',
+                    'sentiment': analysis.sentiment || 'Neutral',
+                    'authority': analysis.authority || 'Unknown',
+                    'recency': analysis.recency || 'Unknown',
+                    'links': analysis.links || 'No Links',
+                    'bias': analysis.bias || 'Unknown',
+                    'social': analysis.social || 'Mixed',
+                    'bot': analysis.bot || 'None'
+                };
+                
+                for (const [id, value] of Object.entries(elements)) {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = value;
+                }
+            }
+            
+            // Save to history
+            const classification = labelFromVerdict === 'real' ? 'Real News' : (labelFromVerdict === 'fake' ? 'Fake News' : 'Needs Review');
+            const historyEntry = {
+                title: (article && article.title) ? article.title : 'Untitled',
+                content: (article && article.content) ? article.content.substring(0, 100) : '',
+                score: classification,
+                time: new Date().toLocaleTimeString()
+            };
+            saveToHistory(historyEntry);
+        }
+        
+        // Extract real reference links from content
+        function extractReferenceLinks(content) {
+            const urls = [];
+            
+            // Pattern 1: Full URLs with protocol (http://, https://)
+            const fullUrlPattern = /https?:\/\/(?:[a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/[^\s\)]*)?/gi;
+            let match;
+            while ((match = fullUrlPattern.exec(content)) !== null) {
+                urls.push(match[0].toLowerCase());
+            }
+            
+            // Pattern 2: URLs starting with www
+            const wwwPattern = /www\.[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/[^\s\)]*)?/gi;
+            while ((match = wwwPattern.exec(content)) !== null) {
+                urls.push(match[0].toLowerCase());
+            }
+            
+            // Pattern 3: Domain-only URLs (bbc.com, reuters.com, etc)
+            // Only when preceded by space or common words
+            const domainPattern = /(?:visit|from|at|check|see|read|link|source|www|https?:\/\/)?(?:\s+)?([a-zA-Z0-9-]+\.[a-zA-Z]{2,}(?:\/[^\s\)]*)?)/gi;
+            while ((match = domainPattern.exec(content)) !== null) {
+                if (match[1] && match[1].includes('.')) {
+                    const domain = match[1].toLowerCase();
+                    // Filter out common words that aren't domains
+                    if (!['the', 'and', 'for', 'with', 'that', 'this', 'from', 'about', 'which'].includes(domain)) {
+                        urls.push(domain);
+                    }
+                }
+            }
+            
+            // Pattern 4: Short URLs (bit.ly, tinyurl, etc)
+            const shortUrlPattern = /(?:bit\.ly|tinyurl\.com|short\.link|ow\.ly|goo\.gl)\/[a-zA-Z0-9-_]+/gi;
+            while ((match = shortUrlPattern.exec(content)) !== null) {
+                urls.push(match[0].toLowerCase());
+            }
+            
+            // Deduplicate and clean URLs
+            const uniqueUrls = [...new Set(urls)].filter(url => url && url.length > 3);
+            
+            // Store for later display
+            window.extractedLinks = uniqueUrls;
+            
+            console.log('Extracted URLs:', uniqueUrls); // Debug log
+            return uniqueUrls;
+        }
+
+        // Check if a URL is likely valid (simple heuristic check)
+        function validateLinks(urls) {
+            let validCount = 0;
+            urls.forEach(url => {
+                // Simple check: if URL has domain structure and isn't obviously broken, count it
+                if (url && url.length > 5 && url.includes('.')) {
+                    validCount++;
+                }
+            });
+            return validCount;
+        }
+
         function generateEnhancedResults(content) {
             const wordCount = content.split(' ').length;
             const hasNumbers = /\d/.test(content);
@@ -1001,6 +1442,10 @@
             const hasExclamation = /!/.test(content);
             const hasQuestions = /\?/.test(content);
             const hasEmotional = /(amazing|terrible|shocking|unbelievable|breaking)/i.test(content);
+            
+            // Extract real reference links from content
+            const extractedLinks = extractReferenceLinks(content);
+            const validLinksCount = validateLinks(extractedLinks);
             
             let score = 75;
             
@@ -1012,6 +1457,8 @@
             if (!hasExclamation) score += 10;
             if (!hasQuestions) score += 5;
             if (!hasEmotional) score += 8;
+            // Boost score if content has valid reference links
+            if (validLinksCount > 0) score += (validLinksCount > 3 ? 5 : 3);
             
             // Add intelligent randomness
             score += Math.floor(Math.random() * 15) - 7;
@@ -1023,7 +1470,8 @@
                 sentiment: generateAdvancedSentiment(content),
                 authority: score > 75 ? 'High' : score > 55 ? 'Medium' : 'Low',
                 recency: generateRecency(),
-                links: Math.floor(Math.random() * 8) + 3 + ' Valid',
+                links: validLinksCount + ' Valid',
+                extractedLinks: extractedLinks,
                 bias: score > 70 ? 'Low' : score > 50 ? 'Medium' : 'High',
                 social: generateSocialSignals(score),
                 bot: score > 60 ? 'None' : 'Detected'
@@ -1071,6 +1519,16 @@
             document.getElementById('bias').textContent = results.bias;
             document.getElementById('social').textContent = results.social;
             document.getElementById('bot').textContent = results.bot;
+            
+            // Display extracted links if available
+            if (results.extractedLinks && results.extractedLinks.length > 0) {
+                let linksHtml = '<div style="margin-top:10px; font-size:0.9rem;"><strong>Extracted Links:</strong><ul style="margin:5px 0; padding-left:20px;">';
+                results.extractedLinks.forEach(link => {
+                    linksHtml += `<li><a href="https://${link.replace(/^https?:\/\/|^www\./, '')}" target="_blank" style="color:#0066cc; text-decoration:none;">${link}</a></li>`;
+                });
+                linksHtml += '</ul></div>';
+                document.getElementById('links').parentElement.insertAdjacentHTML('afterend', linksHtml);
+            }
             
             // Update score circle with enhanced styling
             const scoreCircle = document.getElementById('scoreCircle');
